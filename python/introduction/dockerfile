@@ -1,0 +1,32 @@
+# Running Python inside Docker
+# Running Python inside a container helps maintain portability.
+# Help for version conflicts and help other engineers can run your application with ease.
+
+# DockerHub
+# https://hub.docker.com/layers/python/library/python/3.9.7-alpine3.13/images/sha256-bf6539b4c94daa5d03304c28ae20f686ad01017ad7e5bbf361a7cc2b89fa5eab?context=explore
+# python:3.9.7-alpine3.13
+
+# Commands:
+# 1) docker build --target dev . -t python
+# 2) docker run -it -v ${PWD}:/work python sh
+
+# FROM baseImage:tag AS stage
+# image for development purposes
+FROM python:3.9.7-alpine3.13 as dev
+
+# working directory where we're mounting all of our src code in so we can work inside the container
+WORKDIR /work
+
+# image for debugging purposes
+FROM python:3.9.6-alpine3.13 as debugging
+
+# add a debugger
+
+FROM dev as runtime
+COPY ./src/ /app
+
+ENTRYPOINT [ "python", "/app/app.py" ]
+
+# 3) docker build . -t customer-app
+# 4) docker run customer-app
+
