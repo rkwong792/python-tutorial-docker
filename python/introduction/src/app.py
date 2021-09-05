@@ -23,5 +23,10 @@ def getCustomers():
 
 customers = getCustomers()
 
+# Method 1 iteration
 for customerID in customers:
     print(customers[customerID].fullName())
+
+# Method 2 iteration
+for _, customer in customers.items():
+    print(customer.fullName())
